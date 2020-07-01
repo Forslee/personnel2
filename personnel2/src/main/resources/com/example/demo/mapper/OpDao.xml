@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.OpDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Op">
+    <id column="opID" jdbcType="VARCHAR" property="opid" />
+    <result column="opPassword" jdbcType="VARCHAR" property="oppassword" />
+    <result column="opName" jdbcType="VARCHAR" property="opname" />
+    <result column="opPhone" jdbcType="VARCHAR" property="opphone" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    opID, opPassword, opName, opPhone, remark, permission
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from op
+    where opID = #{opid,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll" resultType="com.example.demo.entity.Op" resultMap="BaseResultMap">
+    select * from op;
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from op
+    where opID = #{opid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.example.demo.entity.Op" >
+    insert into op (opID,opPassword, opName, opPhone,
+      remark, permission)
+    values (#{opid,jdbcType=VARCHAR},#{oppassword,jdbcType=VARCHAR}, #{opname,jdbcType=VARCHAR}, #{opphone,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="opID" keyProperty="opid" parameterType="com.example.demo.entity.Op" useGeneratedKeys="true">
+    insert into op
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="oppassword != null">
+        opPassword,
+      </if>
+      <if test="opname != null">
+        opName,
+      </if>
+      <if test="opphone != null">
+        opPhone,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="oppassword != null">
+        #{oppassword,jdbcType=VARCHAR},
+      </if>
+      <if test="opname != null">
+        #{opname,jdbcType=VARCHAR},
+      </if>
+      <if test="opphone != null">
+        #{opphone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Op">
+    update op
+    <set>
+      <if test="oppassword != null">
+        opPassword = #{oppassword,jdbcType=VARCHAR},
+      </if>
+      <if test="opname != null">
+        opName = #{opname,jdbcType=VARCHAR},
+      </if>
+      <if test="opphone != null">
+        opPhone = #{opphone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="permission != null">
+        permission = #{permission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where opID = #{opid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Op">
+    update op
+    set  permission = #{permission,jdbcType=VARCHAR}
+    where opID = #{opid,jdbcType=VARCHAR}
+  </update>
+</mapper>

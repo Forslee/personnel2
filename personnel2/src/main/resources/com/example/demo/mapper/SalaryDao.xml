@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.SalaryDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Salary">
+    <id column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+    <result column="personnelName" jdbcType="VARCHAR" property="personnelname" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="bonus" jdbcType="INTEGER" property="bonus" />
+    <result column="basisSalary" jdbcType="INTEGER" property="basissalary" />
+    <result column="trafficSalary" jdbcType="INTEGER" property="trafficsalary" />
+    <result column="allSalary" jdbcType="INTEGER" property="allsalary" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    personnelID, personnelName, department, bonus, basisSalary, trafficSalary, allSalary
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from salary
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </select>
+  <select id="findSalaryByDepartment" resultType="com.example.demo.entity.Salary" resultMap="BaseResultMap">
+    select * from salary
+    where department = #{department,jdbcType=VARCHAR}
+  </select>
+    <select id="findAll" resultType="com.example.demo.entity.Salary" resultMap="BaseResultMap">select * from salary</select>
+  <select id="findSalary_No_processing" resultType="com.example.demo.entity.Salary" resultMap="BaseResultMap">
+    select * from salary where bonus = 0 and department = #{department,jdbcType=VARCHAR}
+  </select>
+  <select id="findSalary_Having_processing" resultType="com.example.demo.entity.Salary" resultMap="BaseResultMap">
+    select * from salary where bonus != 0 and department = #{department,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from salary
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.example.demo.entity.Salary">
+    insert into salary (personnelID,personnelName, department, bonus,
+      basisSalary, trafficSalary, allSalary
+      )
+    values (#{personnelid,jdbcType=VARCHAR},#{personnelname,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{bonus,jdbcType=INTEGER},
+      #{basissalary,jdbcType=INTEGER}, #{trafficsalary,jdbcType=INTEGER}, #{allsalary,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="personnelID" keyProperty="personnelid" parameterType="com.example.demo.entity.Salary" useGeneratedKeys="true">
+    insert into salary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personnelname != null">
+        personnelName,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="bonus != null">
+        bonus,
+      </if>
+      <if test="basissalary != null">
+        basisSalary,
+      </if>
+      <if test="trafficsalary != null">
+        trafficSalary,
+      </if>
+      <if test="allsalary != null">
+        allSalary,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="personnelname != null">
+        #{personnelname,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="bonus != null">
+        #{bonus,jdbcType=INTEGER},
+      </if>
+      <if test="basissalary != null">
+        #{basissalary,jdbcType=INTEGER},
+      </if>
+      <if test="trafficsalary != null">
+        #{trafficsalary,jdbcType=INTEGER},
+      </if>
+      <if test="allsalary != null">
+        #{allsalary,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Salary">
+    update salary
+    <set>
+      <if test="personnelname != null">
+        personnelName = #{personnelname,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="bonus != null">
+        bonus = #{bonus,jdbcType=INTEGER},
+      </if>
+      <if test="basissalary != null">
+        basisSalary = #{basissalary,jdbcType=INTEGER},
+      </if>
+      <if test="trafficsalary != null">
+        trafficSalary = #{trafficsalary,jdbcType=INTEGER},
+      </if>
+      <if test="allsalary != null">
+        allSalary = #{allsalary,jdbcType=INTEGER},
+      </if>
+    </set>
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Salary">
+    update salary
+    set personnelName = #{personnelname,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      bonus = #{bonus,jdbcType=INTEGER},
+      basisSalary = #{basissalary,jdbcType=INTEGER},
+      trafficSalary = #{trafficsalary,jdbcType=INTEGER},
+      allSalary = #{allsalary,jdbcType=INTEGER}
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </update>
+</mapper>

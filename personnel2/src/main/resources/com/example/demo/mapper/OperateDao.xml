@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.OperateDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Operate">
+    <id column="no" jdbcType="INTEGER" property="no" />
+    <result column="op" jdbcType="VARCHAR" property="op" />
+    <result column="addDate" jdbcType="DATE" property="adddate" />
+    <result column="Event" jdbcType="VARCHAR" property="event" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `no`, op, addDate, Event
+  </sql>
+
+
+  <insert id="insert" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Operate" useGeneratedKeys="true">
+    insert into operate (op, addDate, Event
+      )
+    values (#{op,jdbcType=VARCHAR}, #{adddate,jdbcType=DATE}, #{event,jdbcType=VARCHAR}
+      )
+  </insert>
+    <update id="update" parameterType="com.example.demo.entity.Operate">
+      update operate
+      set op = #{op,jdbcType=VARCHAR},
+          addDate = #{adddate,jdbcType=DATE},
+          Event = #{event,jdbcType=VARCHAR}
+      where `no` = #{no,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="com.example.demo.entity.Operate" resultMap="BaseResultMap">
+      select
+      *
+      from operate
+      where op = #{op,jdbcType=VARCHAR},
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+      delete from operate
+      where op = #{op,jdbcType=VARCHAR}
+    </delete>
+  <delete id="deleteByPrimaryNo" parameterType="java.lang.Integer">
+    delete from operate
+    where `no` = #{no,jdbcType=INTEGER}
+  </delete>
+    <select id="findAll"  resultType="com.example.demo.entity.Operate" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from operate
+    </select>
+</mapper>

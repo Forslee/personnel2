@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.SysDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Sys">
+    <id column="sysNo" jdbcType="VARCHAR" property="sysno" />
+    <result column="sys_Name" jdbcType="VARCHAR" property="sysName" />
+    <result column="sys_Password" jdbcType="VARCHAR" property="sysPassword" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sysNo, sys_Name, sys_Password
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys
+    where sysNo = #{sysno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys
+    where sysNo = #{sysno,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert"  parameterType="com.example.demo.entity.Sys" >
+    insert into sys (sysNo,sys_Name, sys_Password)
+    values (#{sysno,jdbcType=VARCHAR},#{sysName,jdbcType=VARCHAR}, #{sysPassword,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="sysNo" keyProperty="sysno" parameterType="com.example.demo.entity.Sys" useGeneratedKeys="true">
+    insert into sys
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sysName != null">
+        sys_Name,
+      </if>
+      <if test="sysPassword != null">
+        sys_Password,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sysName != null">
+        #{sysName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysPassword != null">
+        #{sysPassword,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Sys">
+    update sys
+    <set>
+      <if test="sysName != null">
+        sys_Name = #{sysName,jdbcType=VARCHAR},
+      </if>
+      <if test="sysPassword != null">
+        sys_Password = #{sysPassword,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where sysNo = #{sysno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Sys">
+    update sys
+    set sys_Name = #{sysName,jdbcType=VARCHAR},
+      sys_Password = #{sysPassword,jdbcType=VARCHAR}
+    where sysNo = #{sysno,jdbcType=VARCHAR}
+  </update>
+</mapper>

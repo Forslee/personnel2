@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PersonnelencourageorpunishDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Personnelencourageorpunish">
+    <id column="no" jdbcType="INTEGER" property="no" />
+    <result column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+    <result column="encOrpunishDate" jdbcType="DATE" property="encorpunishdate" />
+    <result column="encOrpunishReason" jdbcType="VARCHAR" property="encorpunishreason" />
+    <result column="encOrpunishPoint" jdbcType="INTEGER" property="encorpunishpoint" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="op" jdbcType="VARCHAR" property="op" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `no`, personnelID, encOrpunishDate, encOrpunishReason, encOrpunishPoint, `type`, 
+    remark, op
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from personnelencourageorpunish
+    where personnelid = #{personnelid,jdbcType=VARCHAR}
+  </select>
+  <select id="findAll1" resultType="com.example.demo.entity.Personnelencourageorpunish" resultMap="BaseResultMap">
+    select * from personnelencourageorpunish
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from personnelencourageorpunish
+    where personnelid = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByNo" parameterType="java.lang.Integer">
+    delete from personnelencourageorpunish
+    where `no` = #{no,jdbcType=INTEGER}
+  </delete>
+  <delete id="deletebyop" parameterType="java.lang.String">
+    delete from personnelencourageorpunish
+    where op = #{op,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personnelencourageorpunish" useGeneratedKeys="true">
+    insert into personnelencourageorpunish (personnelID, encOrpunishDate, encOrpunishReason, 
+      encOrpunishPoint, `type`, remark, 
+      op)
+    values (#{personnelid,jdbcType=VARCHAR}, #{encorpunishdate,jdbcType=DATE}, #{encorpunishreason,jdbcType=VARCHAR}, 
+      #{encorpunishpoint,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{op,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personnelencourageorpunish" useGeneratedKeys="true">
+    insert into personnelencourageorpunish
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        personnelID,
+      </if>
+      <if test="encorpunishdate != null">
+        encOrpunishDate,
+      </if>
+      <if test="encorpunishreason != null">
+        encOrpunishReason,
+      </if>
+      <if test="encorpunishpoint != null">
+        encOrpunishPoint,
+      </if>
+      <if test="type != null">
+        `type`,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="op != null">
+        op,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="encorpunishdate != null">
+        #{encorpunishdate,jdbcType=DATE},
+      </if>
+      <if test="encorpunishreason != null">
+        #{encorpunishreason,jdbcType=VARCHAR},
+      </if>
+      <if test="encorpunishpoint != null">
+        #{encorpunishpoint,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        #{op,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Personnelencourageorpunish">
+    update personnelencourageorpunish
+    <set>
+      <if test="personnelid != null">
+        personnelID = #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="encorpunishdate != null">
+        encOrpunishDate = #{encorpunishdate,jdbcType=DATE},
+      </if>
+      <if test="encorpunishreason != null">
+        encOrpunishReason = #{encorpunishreason,jdbcType=VARCHAR},
+      </if>
+      <if test="encorpunishpoint != null">
+        encOrpunishPoint = #{encorpunishpoint,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        `type` = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        op = #{op,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Personnelencourageorpunish">
+    update personnelencourageorpunish
+    set personnelID = #{personnelid,jdbcType=VARCHAR},
+      encOrpunishDate = #{encorpunishdate,jdbcType=DATE},
+      encOrpunishReason = #{encorpunishreason,jdbcType=VARCHAR},
+      encOrpunishPoint = #{encorpunishpoint,jdbcType=INTEGER},
+      `type` = #{type,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      op = #{op,jdbcType=VARCHAR}
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>

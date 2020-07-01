@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PersonnelremoveDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Personnelremove">
+    <id column="no" jdbcType="INTEGER" property="no" />
+    <result column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+    <result column="removeDate" jdbcType="DATE" property="removedate" />
+    <result column="afterRemoveDepartment" jdbcType="VARCHAR" property="afterremovedepartment" />
+    <result column="afterRemoveJob" jdbcType="VARCHAR" property="afterremovejob" />
+    <result column="removeReason" jdbcType="VARCHAR" property="removereason" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="op" jdbcType="VARCHAR" property="op" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `no`, personnelID, removeDate, afterRemoveDepartment, afterRemoveJob, removeReason, 
+    remark, op
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="com.example.demo.entity.Personnelremove" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from personnelremove
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </select>
+    <select id="findAll" resultType="com.example.demo.entity.Personnelremove">select * from personnelremove</select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from personnelremove
+    where personnelid = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByNo" parameterType="java.lang.Integer">
+    delete from personnelremove
+    where `no` = #{no,jdbcType=INTEGER}
+  </delete>
+  <delete id="deletebyop" parameterType="java.lang.String">
+    delete from personnelremove
+    where op = #{op,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personnelremove" useGeneratedKeys="true">
+    insert into personnelremove (personnelID, removeDate, afterRemoveDepartment, 
+      afterRemoveJob, removeReason, remark, 
+      op)
+    values (#{personnelid,jdbcType=VARCHAR}, #{removedate,jdbcType=DATE}, #{afterremovedepartment,jdbcType=VARCHAR}, 
+      #{afterremovejob,jdbcType=VARCHAR}, #{removereason,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{op,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personnelremove" useGeneratedKeys="true">
+    insert into personnelremove
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        personnelID,
+      </if>
+      <if test="removedate != null">
+        removeDate,
+      </if>
+      <if test="afterremovedepartment != null">
+        afterRemoveDepartment,
+      </if>
+      <if test="afterremovejob != null">
+        afterRemoveJob,
+      </if>
+      <if test="removereason != null">
+        removeReason,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="op != null">
+        op,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="removedate != null">
+        #{removedate,jdbcType=DATE},
+      </if>
+      <if test="afterremovedepartment != null">
+        #{afterremovedepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="afterremovejob != null">
+        #{afterremovejob,jdbcType=VARCHAR},
+      </if>
+      <if test="removereason != null">
+        #{removereason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        #{op,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Personnelremove">
+    update personnelremove
+    <set>
+      <if test="personnelid != null">
+        personnelID = #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="removedate != null">
+        removeDate = #{removedate,jdbcType=DATE},
+      </if>
+      <if test="afterremovedepartment != null">
+        afterRemoveDepartment = #{afterremovedepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="afterremovejob != null">
+        afterRemoveJob = #{afterremovejob,jdbcType=VARCHAR},
+      </if>
+      <if test="removereason != null">
+        removeReason = #{removereason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        op = #{op,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Personnelremove">
+    update personnelremove
+    set personnelID = #{personnelid,jdbcType=VARCHAR},
+      removeDate = #{removedate,jdbcType=DATE},
+      afterRemoveDepartment = #{afterremovedepartment,jdbcType=VARCHAR},
+      afterRemoveJob = #{afterremovejob,jdbcType=VARCHAR},
+      removeReason = #{removereason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      op = #{op,jdbcType=VARCHAR}
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>

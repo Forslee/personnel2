@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PersonneladjustsalaryDao">
+  <resultMap id="BaseResultMap" type="com.example.demo.entity.Personneladjustsalary">
+    <id column="no" jdbcType="INTEGER" property="no" />
+    <result column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+    <result column="AdjustSalaryDate" jdbcType="DATE" property="adjustsalarydate" />
+    <result column="beforeAdjustSalary" jdbcType="INTEGER" property="beforeadjustsalary" />
+    <result column="afterAdjustSalary" jdbcType="INTEGER" property="afteradjustsalary" />
+    <result column="AdjustSalaryReason" jdbcType="VARCHAR" property="adjustsalaryreason" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="op" jdbcType="VARCHAR" property="op" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    `no`, personnelID, AdjustSalaryDate, beforeAdjustSalary, afterAdjustSalary, AdjustSalaryReason, 
+    remark, op
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultType="com.example.demo.entity.Personneladjustsalary" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from personneladjustsalary
+    where personnelid = #{personnelid,jdbcType=VARCHAR}
+  </select>
+  <select id="find_new_one" resultType="com.example.demo.entity.Personneladjustsalary" resultMap="BaseResultMap">
+    select * from personneladjustsalary where `no` = (select max(`no`) from personneladjustsalary)
+  </select>
+  <select id="findAll" resultType="com.example.demo.entity.Personneladjustsalary" resultMap="BaseResultMap">
+    select * from personneladjustsalary
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from personneladjustsalary
+    where personnelid = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deletebyop" parameterType="java.lang.String">
+    delete from personneladjustsalary
+    where op = #{op,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteByNo" parameterType="java.lang.Integer">
+    delete from personneladjustsalary
+    where `no` = #{no,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personneladjustsalary" useGeneratedKeys="true">
+    insert into personneladjustsalary (personnelID, AdjustSalaryDate, beforeAdjustSalary, 
+      afterAdjustSalary, AdjustSalaryReason, 
+      remark, op)
+    values (#{personnelid,jdbcType=VARCHAR}, #{adjustsalarydate,jdbcType=DATE}, #{beforeadjustsalary,jdbcType=INTEGER}, 
+      #{afteradjustsalary,jdbcType=INTEGER}, #{adjustsalaryreason,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{op,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="no" keyProperty="no" parameterType="com.example.demo.entity.Personneladjustsalary" useGeneratedKeys="true">
+    insert into personneladjustsalary
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        personnelID,
+      </if>
+      <if test="adjustsalarydate != null">
+        AdjustSalaryDate,
+      </if>
+      <if test="beforeadjustsalary != null">
+        beforeAdjustSalary,
+      </if>
+      <if test="afteradjustsalary != null">
+        afterAdjustSalary,
+      </if>
+      <if test="adjustsalaryreason != null">
+        AdjustSalaryReason,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="op != null">
+        op,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="personnelid != null">
+        #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustsalarydate != null">
+        #{adjustsalarydate,jdbcType=DATE},
+      </if>
+      <if test="beforeadjustsalary != null">
+        #{beforeadjustsalary,jdbcType=INTEGER},
+      </if>
+      <if test="afteradjustsalary != null">
+        #{afteradjustsalary,jdbcType=INTEGER},
+      </if>
+      <if test="adjustsalaryreason != null">
+        #{adjustsalaryreason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        #{op,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Personneladjustsalary">
+    update personneladjustsalary
+    <set>
+      <if test="personnelid != null">
+        personnelID = #{personnelid,jdbcType=VARCHAR},
+      </if>
+      <if test="adjustsalarydate != null">
+        AdjustSalaryDate = #{adjustsalarydate,jdbcType=DATE},
+      </if>
+      <if test="beforeadjustsalary != null">
+        beforeAdjustSalary = #{beforeadjustsalary,jdbcType=INTEGER},
+      </if>
+      <if test="afteradjustsalary != null">
+        afterAdjustSalary = #{afteradjustsalary,jdbcType=INTEGER},
+      </if>
+      <if test="adjustsalaryreason != null">
+        AdjustSalaryReason = #{adjustsalaryreason,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="op != null">
+        op = #{op,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Personneladjustsalary">
+    update personneladjustsalary
+    set personnelID = #{personnelid,jdbcType=VARCHAR},
+      AdjustSalaryDate = #{adjustsalarydate,jdbcType=DATE},
+      beforeAdjustSalary = #{beforeadjustsalary,jdbcType=INTEGER},
+      afterAdjustSalary = #{afteradjustsalary,jdbcType=INTEGER},
+      AdjustSalaryReason = #{adjustsalaryreason,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      op = #{op,jdbcType=VARCHAR}
+    where `no` = #{no,jdbcType=INTEGER}
+  </update>
+</mapper>

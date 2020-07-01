@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.PersonnelinfoDao">
+    <resultMap id="BaseResultMap" type="com.example.demo.entity.Personnelinfo">
+        <id column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+        <result column="personnelName" jdbcType="VARCHAR" property="personnelname" />
+        <result column="personnelSex" jdbcType="VARCHAR" property="personnelsex" />
+        <result column="ID" jdbcType="VARCHAR" property="id" />
+        <result column="birthday" jdbcType="DATE" property="birthday" />
+        <result column="E_mail" jdbcType="VARCHAR" property="eMail" />
+        <result column="phone" jdbcType="VARCHAR" property="phone" />
+        <result column="department" jdbcType="VARCHAR" property="department" />
+        <result column="job" jdbcType="VARCHAR" property="job" />
+        <result column="basisSalary" jdbcType="INTEGER" property="basissalary" />
+        <result column="beginWorkDate" jdbcType="DATE" property="beginworkdate" />
+        <result column="workState" jdbcType="VARCHAR" property="workstate" />
+        <result column="notWorkDate" jdbcType="DATE" property="notworkdate" />
+        <result column="workAge" jdbcType="INTEGER" property="workage" />
+    </resultMap>
+
+  <!--分页查询所有-->
+  <select id="findByPage" resultType="com.example.demo.entity.Personnelinfo" resultMap="BaseResultMap">
+    select * from personnelinfo
+    order by basisSalary
+    limit #{start},#{rows}
+  </select>
+
+  <!--查询总条数-->
+  <select id="findTotals" resultType="Integer">
+    select count(personnelID) from personnelinfo
+  </select>
+
+    <select id="findBySalary" resultType="com.example.demo.entity.Personnelinfo" parameterType="Integer" resultMap="BaseResultMap">
+        select * from personnelinfo
+        where basisSalary = #{basissalary,jdbcType=INTEGER}
+    </select>
+
+    <select id="findBySex" parameterType="java.lang.String" resultType="com.example.demo.entity.Personnelinfo" resultMap="BaseResultMap">
+        select * from personnelinfo
+        where personnelSex = #{personnelsex,jdbcType=VARCHAR}
+    </select>
+
+  <!--信息添加-->
+  <insert id="save" keyColumn="personnelID" keyProperty="personnelid" parameterType="com.example.demo.entity.Personnelinfo" useGeneratedKeys="true">
+    insert into personnelinfo (personnelID,personnelName, personnelSex, ID,
+                               birthday, E_mail, phone,
+                               department, job, basisSalary,
+                               beginWorkDate, workState, notWorkDate,
+                               workAge)
+    values (#{personnelid,jdbcType=VARCHAR},#{personnelname,jdbcType=VARCHAR}, #{personnelsex,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR},
+            #{birthday,jdbcType=DATE}, #{eMail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR},
+            #{department,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{basissalary,jdbcType=INTEGER},
+            #{beginworkdate,jdbcType=DATE}, #{workstate,jdbcType=VARCHAR}, #{notworkdate,jdbcType=DATE},
+            #{workage,jdbcType=INTEGER})
+  </insert>
+
+  <!--信息删除-->
+  <delete id="delete" parameterType="java.lang.String">
+    delete from personnelinfo
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+
+    <delete id="deleteByJob" parameterType="java.lang.String">
+        delete from personnelinfo
+        where job = #{job,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByDepartment" parameterType="java.lang.String">
+        delete from personnelinfo
+        where  department = #{department,jdbcType=VARCHAR}
+    </delete>
+  <!--查询一个-->
+  <select id="findone" parameterType="java.lang.String" resultType="com.example.demo.entity.Personnelinfo">
+    select * from personnelinfo
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </select>
+
+    <select id="findJobAll" parameterType="java.lang.String" resultType="com.example.demo.entity.Personnelinfo">
+        select * from personnelinfo
+        where  job = #{job,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findDepartmentAll" parameterType="java.lang.String" resultType="com.example.demo.entity.Personnelinfo">
+        select * from personnelinfo
+        where  department = #{department,jdbcType=VARCHAR}
+    </select>
+
+
+  <!--修改员工信息-->
+  <update id="update" parameterType="com.example.demo.entity.Personnelinfo">
+    update personnelinfo
+    set personnelName = #{personnelname,jdbcType=VARCHAR},
+        personnelSex = #{personnelsex,jdbcType=VARCHAR},
+        ID = #{id,jdbcType=VARCHAR},
+        birthday = #{birthday,jdbcType=DATE},
+        E_mail = #{eMail,jdbcType=VARCHAR},
+        phone = #{phone,jdbcType=VARCHAR},
+        department = #{department,jdbcType=VARCHAR},
+        job = #{job,jdbcType=VARCHAR},
+        basisSalary = #{basissalary,jdbcType=INTEGER},
+        beginWorkDate = #{beginworkdate,jdbcType=DATE},
+        workState = #{workstate,jdbcType=VARCHAR},
+        notWorkDate = #{notworkdate,jdbcType=DATE},
+        workAge = #{workage,jdbcType=INTEGER}
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </update>
+  <!--<resultMap id="BaseResultMap" type="com.example.demo.entity.Personnelinfo">
+    <id column="personnelID" jdbcType="VARCHAR" property="personnelid" />
+    <result column="personnelName" jdbcType="VARCHAR" property="personnelname" />
+    <result column="personnelSex" jdbcType="VARCHAR" property="personnelsex" />
+    <result column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="birthday" jdbcType="DATE" property="birthday" />
+    <result column="E_mail" jdbcType="VARCHAR" property="eMail" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="job" jdbcType="VARCHAR" property="job" />
+    <result column="basisSalary" jdbcType="INTEGER" property="basissalary" />
+    <result column="beginWorkDate" jdbcType="DATE" property="beginworkdate" />
+    <result column="workState" jdbcType="VARCHAR" property="workstate" />
+    <result column="notWorkDate" jdbcType="DATE" property="notworkdate" />
+    <result column="workAge" jdbcType="INTEGER" property="workage" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    personnelID, personnelName, personnelSex, ID, birthday, E_mail, phone, department, 
+    job, basisSalary, beginWorkDate, workState, notWorkDate, workAge
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from personnelinfo
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from personnelinfo
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" keyColumn="personnelID" keyProperty="personnelid" parameterType="com.example.demo.entity.Personnelinfo" useGeneratedKeys="true">
+    insert into personnelinfo (personnelName, personnelSex, ID, 
+      birthday, E_mail, phone, 
+      department, job, basisSalary, 
+      beginWorkDate, workState, notWorkDate, 
+      workAge)
+    values (#{personnelname,jdbcType=VARCHAR}, #{personnelsex,jdbcType=VARCHAR}, #{id,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{eMail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, #{basissalary,jdbcType=INTEGER}, 
+      #{beginworkdate,jdbcType=DATE}, #{workstate,jdbcType=VARCHAR}, #{notworkdate,jdbcType=DATE}, 
+      #{workage,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" keyColumn="personnelID" keyProperty="personnelid" parameterType="com.example.demo.entity.Personnelinfo" useGeneratedKeys="true">
+    insert into personnelinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="personnelname != null">
+        personnelName,
+      </if>
+      <if test="personnelsex != null">
+        personnelSex,
+      </if>
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="eMail != null">
+        E_mail,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="job != null">
+        job,
+      </if>
+      <if test="basissalary != null">
+        basisSalary,
+      </if>
+      <if test="beginworkdate != null">
+        beginWorkDate,
+      </if>
+      <if test="workstate != null">
+        workState,
+      </if>
+      <if test="notworkdate != null">
+        notWorkDate,
+      </if>
+      <if test="workage != null">
+        workAge,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="personnelname != null">
+        #{personnelname,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelsex != null">
+        #{personnelsex,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="eMail != null">
+        #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="basissalary != null">
+        #{basissalary,jdbcType=INTEGER},
+      </if>
+      <if test="beginworkdate != null">
+        #{beginworkdate,jdbcType=DATE},
+      </if>
+      <if test="workstate != null">
+        #{workstate,jdbcType=VARCHAR},
+      </if>
+      <if test="notworkdate != null">
+        #{notworkdate,jdbcType=DATE},
+      </if>
+      <if test="workage != null">
+        #{workage,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.entity.Personnelinfo">
+    update personnelinfo
+    <set>
+      <if test="personnelname != null">
+        personnelName = #{personnelname,jdbcType=VARCHAR},
+      </if>
+      <if test="personnelsex != null">
+        personnelSex = #{personnelsex,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null">
+        ID = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="eMail != null">
+        E_mail = #{eMail,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="job != null">
+        job = #{job,jdbcType=VARCHAR},
+      </if>
+      <if test="basissalary != null">
+        basisSalary = #{basissalary,jdbcType=INTEGER},
+      </if>
+      <if test="beginworkdate != null">
+        beginWorkDate = #{beginworkdate,jdbcType=DATE},
+      </if>
+      <if test="workstate != null">
+        workState = #{workstate,jdbcType=VARCHAR},
+      </if>
+      <if test="notworkdate != null">
+        notWorkDate = #{notworkdate,jdbcType=DATE},
+      </if>
+      <if test="workage != null">
+        workAge = #{workage,jdbcType=INTEGER},
+      </if>
+    </set>
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.entity.Personnelinfo">
+    update personnelinfo
+    set personnelName = #{personnelname,jdbcType=VARCHAR},
+      personnelSex = #{personnelsex,jdbcType=VARCHAR},
+      ID = #{id,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=DATE},
+      E_mail = #{eMail,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      job = #{job,jdbcType=VARCHAR},
+      basisSalary = #{basissalary,jdbcType=INTEGER},
+      beginWorkDate = #{beginworkdate,jdbcType=DATE},
+      workState = #{workstate,jdbcType=VARCHAR},
+      notWorkDate = #{notworkdate,jdbcType=DATE},
+      workAge = #{workage,jdbcType=INTEGER}
+    where personnelID = #{personnelid,jdbcType=VARCHAR}
+  </update>-->
+</mapper>
